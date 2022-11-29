@@ -1,8 +1,7 @@
 import sys
 from fbx import *
 
-
-def main(obj_path, fbx_path):
+def main(obj_path, fbx_path, version_code):
     # Create
     manager = FbxManager.Create()
     scene = FbxScene.Create(manager, "fbxScene")
@@ -15,7 +14,7 @@ def main(obj_path, fbx_path):
 
     # Export the scene to the file.
     exporter.Initialize(fbx_path, -1)
-    exporter.SetFileExportVersion('FBX201200',FbxSceneRenamer.eNone)
+    exporter.SetFileExportVersion(version_code, FbxSceneRenamer.eNone)
     exporter.Export(scene)
 
     # Destroy
@@ -31,5 +30,7 @@ if __name__ == '__main__':
 
     if len(args) < 2:
         print('Arguments are too short')
-    else:
-        main(args[1], args[2])
+    elif len(args) == 3:
+        main(args[1], args[2], 'FBX201200')
+    elif len(args) > 3:
+        main(args[1], args[2], args[3])
